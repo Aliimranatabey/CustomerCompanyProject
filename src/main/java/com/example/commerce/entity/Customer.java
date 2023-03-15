@@ -15,7 +15,7 @@ public class Customer {
      @Id
      @GeneratedValue(generator = "UUID")
      @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-     @Column(name="id", columnDefinition = "VARCHAR(255)",nullable = false)
+     @Column(name="id",nullable = false)
      private UUID id;
 
      //unique default olarak zaten false değer girer .
@@ -32,7 +32,7 @@ public class Customer {
      private String password;
 
      @Column(name="gender",length = 20,nullable = false)
-     private String gender;
+     private Gender gender;
 
      @DateTimeFormat(pattern="dd/MM/yyyy")
      @Column(name="birthday",length = 20,nullable = false)
@@ -40,7 +40,7 @@ public class Customer {
 
      public Customer(){}
 
-     public Customer(UUID id , String name, String surname, String email , String password ,String gender , Date birthday){
+     public Customer(UUID id , String name, String surname, String email , String password ,Gender gender , Date birthday){
 
           this.id=id;
           this.name=name;
@@ -87,11 +87,11 @@ public class Customer {
           this.password=password;
      }
 
-     public String getGender(){
+     public Gender getGender(){
           return gender;
      }
 
-     public void setGender(String gender){
+     public void setGender(Gender gender){
           this.gender=gender;
      }
 
