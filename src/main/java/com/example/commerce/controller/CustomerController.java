@@ -1,10 +1,11 @@
 package com.example.commerce.controller;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,10 +22,10 @@ public class CustomerController {
     
     @GetMapping("/test")
     public String test(){
-        return "deneme";
+        return "TEST SUCCESSFUL";
     }    
 
-    @GetMapping("/getAll")
+    @GetMapping("")
     public List<Customer> getAll(){
         return customerService.getAll();
     }
@@ -37,7 +38,20 @@ public class CustomerController {
     @PostMapping("")
     public String add(@RequestBody Customer customer){
         customerService.add(customer);
-        return "SUCCESFULL ADDED";
+        return "SUCCESSFUL ADDED";
+    }
+
+    @PutMapping("")
+    public String update(@RequestBody Customer customer){
+        customerService.update(customer);
+        return "SUCCESSFUL UPDATED";
+    }
+
+    @DeleteMapping("")
+    public String delete(@RequestParam("id") UUID id){
+        customerService.delete(id);
+        return "SUCCESSFUL DELETED";
+
     }
 
 }

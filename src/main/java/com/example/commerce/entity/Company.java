@@ -12,8 +12,8 @@ import jakarta.persistence.Table;
 @Table(name="company")
 public class Company {
     
-    @Id
-    @GeneratedValue(generator = "UUID")
+    @Id 
+    @GeneratedValue(generator = "UUID") 
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name="id")
     private UUID id;

@@ -1,7 +1,6 @@
 package com.example.commerce.service;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -25,4 +24,14 @@ public class CustomerService {
     public Customer add(Customer customer){
         return customerRepository.save(customer);
     }
+
+    public Customer update(Customer customer){
+        return customerRepository.saveAndFlush(customer);   
+    }
+
+    public void delete(UUID id){
+        customerRepository.deleteById(id);
+    }
+
+
 }
