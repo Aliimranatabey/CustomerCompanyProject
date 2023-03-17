@@ -1,12 +1,17 @@
 package com.example.commerce.entity;
 import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -38,9 +43,20 @@ public class Customer {
      @Column(name="birthday",length = 20,nullable = false)
      private Date birthday;
 
+     @ManyToMany(cascade={
+          CascadeType.PERSIST,
+          CascadeType.MERGE
+     })
+     @JoinTable(
+          name="registered",
+          joinColumns = {@JoinColumn(name="customer_id")},
+          inverseJoinColumns = {@JoinColumn(name="company_id")}
+     )
+     private Set<Company> companys;
+
      public Customer(){}
 
-     public Customer(UUID id , String name, String surname, String email , String password ,Gender gender , Date birthday){
+     public Customer(UUID id , String name, String surname, String email , String password ,Gender gender , Date birthday , Set<Company> companys){
 
           this.id=id;
           this.name=name;
@@ -49,6 +65,7 @@ public class Customer {
           this.password=password;
           this.gender=gender;
           this.birthday=birthday;
+          this.companys=companys;
 
      }
 
@@ -101,5 +118,13 @@ public class Customer {
 
      public void setBirthday(Date birthday){
           this.birthday=birthday;
+     }
+
+     public Set<Company> getCompany(){
+          return companys;
+     }
+
+     public void setCompany(Set<Company> companys){
+          this.companys=companys;
      }
 }

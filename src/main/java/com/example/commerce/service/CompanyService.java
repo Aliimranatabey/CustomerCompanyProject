@@ -1,12 +1,9 @@
 package com.example.commerce.service;
-
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-
 import com.example.commerce.entity.Company;
 import com.example.commerce.repository.CompanyRepository;
 
@@ -34,6 +31,4 @@ public class CompanyService {
     public void delete(UUID id){
         companyRepository.deleteById(id);
     }
-
-    
 }

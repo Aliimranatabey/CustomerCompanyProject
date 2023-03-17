@@ -32,6 +32,4 @@ public class CustomerService {
     public void delete(UUID id){
         customerRepository.deleteById(id);
     }
-
-
 }

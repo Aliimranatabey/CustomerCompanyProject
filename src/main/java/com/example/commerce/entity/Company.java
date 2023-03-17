@@ -1,11 +1,14 @@
 package com.example.commerce.entity;
 import org.hibernate.annotations.GenericGenerator;
+import java.util.Set;
 import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,14 +31,19 @@ public class Company {
     @Column(name="image",nullable=true)
     private byte[] image;
 
+    @JoinColumn(name="customer_id")
+    @ManyToMany(mappedBy = "companys")
+    private Set<Customer> customers;
+
     public Company(){}
 
-    public Company(UUID id , String name , String url , byte[] image){
+    public Company(UUID id , String name , String url , byte[] image, Set<Customer> customers){
 
         this.id=id;
         this.name=name;
         this.url=url;
         this.image=image;
+        this.customers=customers;
 
     }
 
@@ -65,5 +73,13 @@ public class Company {
 
     public void setImage(){
         this.image=image;
+    }
+
+    public Set<Customer> getCustomer(){
+        return customers;
+    }
+
+    public void setCustomer(Set<Customer> customers){
+        this.customers=customers;
     }
 }
