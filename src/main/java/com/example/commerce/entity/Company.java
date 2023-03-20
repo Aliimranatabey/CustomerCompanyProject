@@ -1,6 +1,5 @@
 package com.example.commerce.entity;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.Set;
 import java.util.UUID;
@@ -36,7 +35,7 @@ public class Company {
     @Column(name="image",nullable=true)
     private byte[] image;
 
-    @ManyToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name="customers",columnDefinition = "jsonb",nullable=true)
     private Set<Customer> customers;
 

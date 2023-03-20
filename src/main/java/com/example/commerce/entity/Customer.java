@@ -46,7 +46,7 @@ public class Customer {
      @Column(name="birthday",length = 20,nullable = false)
      private Date birthday;
 
-     @ManyToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+     @ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.LAZY)
      @JoinTable(
      name = "customer_company", 
      joinColumns = @JoinColumn(name = "customer_id"), 
