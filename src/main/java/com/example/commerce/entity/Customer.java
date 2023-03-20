@@ -3,10 +3,13 @@ import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -43,15 +46,11 @@ public class Customer {
      @Column(name="birthday",length = 20,nullable = false)
      private Date birthday;
 
-     @ManyToMany(cascade={
-          CascadeType.PERSIST,
-          CascadeType.MERGE
-     })
+     @ManyToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
      @JoinTable(
-          name="registered",
-          joinColumns = {@JoinColumn(name="customer_id")},
-          inverseJoinColumns = {@JoinColumn(name="company_id")}
-     )
+     name = "customer_company", 
+     joinColumns = @JoinColumn(name = "customer_id"), 
+     inverseJoinColumns = @JoinColumn(name = "company_id"))
      private Set<Company> companys;
 
      public Customer(){}

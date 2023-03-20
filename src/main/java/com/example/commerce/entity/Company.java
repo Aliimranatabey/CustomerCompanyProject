@@ -1,9 +1,14 @@
 package com.example.commerce.entity;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.rest.core.annotation.RestResource;
+
 import java.util.Set;
 import java.util.UUID;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -31,8 +36,8 @@ public class Company {
     @Column(name="image",nullable=true)
     private byte[] image;
 
-    @JoinColumn(name="customer_id")
-    @ManyToMany(mappedBy = "companys")
+    @ManyToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+    @JoinColumn(name="customers",columnDefinition = "jsonb",nullable=true)
     private Set<Customer> customers;
 
     public Company(){}
