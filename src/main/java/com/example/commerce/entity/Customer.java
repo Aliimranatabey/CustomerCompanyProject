@@ -3,9 +3,8 @@ import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.format.annotation.DateTimeFormat;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,11 +45,12 @@ public class Customer {
      @Column(name="birthday",length = 20,nullable = false)
      private Date birthday;
 
-     @ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.LAZY)
+     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
      @JoinTable(
      name = "customer_company", 
-     joinColumns = @JoinColumn(name = "customer_id"), 
-     inverseJoinColumns = @JoinColumn(name = "company_id"))
+     joinColumns = {@JoinColumn(name = "student_id", referencedColumnName = "id")}, 
+     inverseJoinColumns ={ @JoinColumn(name = "course_id", referencedColumnName = "id")})
+     @JsonManagedReference
      private Set<Company> companys;
 
      public Customer(){}
