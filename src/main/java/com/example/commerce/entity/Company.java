@@ -1,15 +1,11 @@
 package com.example.commerce.entity;
 import org.hibernate.annotations.GenericGenerator;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import java.util.Set;
 import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,19 +28,19 @@ public class Company {
     @Column(name="image",nullable=true)
     private byte[] image;
 
-    @ManyToMany(mappedBy = "companys",fetch = FetchType.LAZY)
-    @JsonBackReference
-    private Set<Customer> customers;
+    //Many to Many ilişkisini geçici olarak devre dışı bıraktım
+    // @ManyToMany(mappedBy = "companys")
+    // @JsonBackReference
+    // private Set<Customer> customers;
 
     public Company(){}
 
-    public Company(UUID id , String name , String url , byte[] image, Set<Customer> customers){
+    public Company(UUID id , String name , String url , byte[] image){
 
         this.id=id;
         this.name=name;
         this.url=url;
         this.image=image;
-        this.customers=customers;
 
     }
 
@@ -76,11 +72,6 @@ public class Company {
         this.image=image;
     }
 
-    public Set<Customer> getCustomer(){
-        return customers;
-    }
+    
 
-    public void setCustomer(Set<Customer> customers){
-        this.customers=customers;
-    }
 }

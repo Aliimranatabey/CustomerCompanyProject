@@ -24,7 +24,9 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
-    public Company update(Company company){
+    public Company update(UUID id,Company company){
+        Company oldCompany =  getById(id);
+        company.setName(company.getName());
         return companyRepository.saveAndFlush(company);
     }
 

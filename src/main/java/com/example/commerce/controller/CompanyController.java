@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,14 +51,14 @@ public class CompanyController {
         return "SUCCESSFUL ADDED";
     }
 
-    @PutMapping("")
-    public String update(@RequestBody Company company){
-        companyService.update(company);
+    @PutMapping("/{id}")
+    public String update(@PathVariable UUID id, @RequestBody Company company){
+        companyService.update(id,company);
         return "SUCCESSFUL UPDATED";
     }
 
-    @DeleteMapping("")
-    public String delete(@RequestParam("id") UUID id){
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable() UUID id){
         companyService.delete(id);
         return "SUCCESSFUL DELETED";
     }

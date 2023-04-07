@@ -25,7 +25,7 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public Customer update(Customer customer){
+    public Customer update(UUID id,Customer customer){
         return customerRepository.saveAndFlush(customer);   
     }
 

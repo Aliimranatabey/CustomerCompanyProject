@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,23 +38,22 @@ public class CustomerController {
         return customerService.getById(id);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("")
     public String add(@RequestBody Customer customer){
         customerService.add(customer);
         return "SUCCESSFUL ADDED";
     }
 
-    @PutMapping("")
-    public String update(@RequestBody Customer customer){
-        customerService.update(customer);
+    @PutMapping("/{id}")
+    public String update(@PathVariable UUID id,@RequestBody Customer customer){
+        customerService.update(id,customer);
         return "SUCCESSFUL UPDATED";
     }
 
-    @DeleteMapping("")
-    public String delete(@RequestParam("id") UUID id){
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable UUID id){
         customerService.delete(id);
         return "SUCCESSFUL DELETED";
-
     }
 
 }

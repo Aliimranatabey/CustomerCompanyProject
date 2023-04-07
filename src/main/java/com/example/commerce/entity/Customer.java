@@ -1,19 +1,14 @@
 package com.example.commerce.entity;
 import java.util.Date;
-import java.util.Set;
 import java.util.UUID;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -41,21 +36,25 @@ public class Customer {
      @Column(name="gender",length = 20,nullable = false)
      private Gender gender;
 
-     @DateTimeFormat(pattern="dd/MM/yyyy")
+     @DateTimeFormat(pattern="yyyy/MM/dd")
      @Column(name="birthday",length = 20,nullable = false)
      private Date birthday;
 
-     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-     @JoinTable(
-     name = "customer_company", 
-     joinColumns = {@JoinColumn(name = "student_id", referencedColumnName = "id")}, 
-     inverseJoinColumns ={ @JoinColumn(name = "course_id", referencedColumnName = "id")})
-     @JsonManagedReference
-     private Set<Company> companys;
+     //Many to Many ilişkisini geçici olarak devre dışı bıraktım
+     // @ManyToMany(cascade={CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+     // @JoinTable(name = "customer_company", 
+     // joinColumns = {@JoinColumn(name = "student_id", referencedColumnName = "id")}, 
+     // inverseJoinColumns ={ @JoinColumn(name = "course_id", referencedColumnName = "id")})
+     // @JsonManagedReference
+     // private Set<Company> companys;
+
+     @ManyToOne()
+     @JoinColumn(name = "company_id")
+     private Company company;
 
      public Customer(){}
 
-     public Customer(UUID id , String name, String surname, String email , String password ,Gender gender , Date birthday , Set<Company> companys){
+     public Customer(UUID id , String name, String surname, String email , String password ,Gender gender , Date birthday , Company company){
 
           this.id=id;
           this.name=name;
@@ -64,7 +63,7 @@ public class Customer {
           this.password=password;
           this.gender=gender;
           this.birthday=birthday;
-          this.companys=companys;
+          this.company=company;
 
      }
 
@@ -119,11 +118,11 @@ public class Customer {
           this.birthday=birthday;
      }
 
-     public Set<Company> getCompany(){
-          return companys;
+     public Company getCompany(){
+          return company;
      }
 
-     public void setCompany(Set<Company> companys){
-          this.companys=companys;
+     public void setCompany(Company company){
+          this.company=company;
      }
 }
