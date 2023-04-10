@@ -2,7 +2,7 @@ package com.example.commerce.entity;
 import java.util.Date;
 import java.util.UUID;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name="customer")
@@ -36,8 +38,9 @@ public class Customer {
      @Column(name="gender",length = 20,nullable = false)
      private Gender gender;
 
-     @DateTimeFormat(pattern="yyyy/MM/dd")
-     @Column(name="birthday",length = 20,nullable = false)
+     @Temporal(TemporalType.DATE)
+     @Column(name="birthday",nullable = false)
+     @JsonFormat(pattern = "yyyy-MM-dd")
      private Date birthday;
 
      //Many to Many ilişkisini geçici olarak devre dışı bıraktım
