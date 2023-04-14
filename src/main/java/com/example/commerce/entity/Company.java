@@ -1,5 +1,8 @@
 package com.example.commerce.entity;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +29,7 @@ public class Company {
 
     @Lob
     @Column(name="image",nullable=true)
-    private byte[] image;
+    private String image;
 
     //Many to Many ilişkisini geçici olarak devre dışı bıraktım
     // @ManyToMany(mappedBy = "companys")
@@ -35,7 +38,7 @@ public class Company {
 
     public Company(){}
 
-    public Company(UUID id , String name , String url , byte[] image){
+    public Company(UUID id , String name , String url , String image){
 
         this.id=id;
         this.name=name;
@@ -64,14 +67,11 @@ public class Company {
         this.url=url;
     }
 
-    public byte[] getImage(){
+    public String getImage(){
         return image;
     }
 
-    public void setImage(){
+    public void setImage(String image){
         this.image=image;
     }
-
-    
-
 }

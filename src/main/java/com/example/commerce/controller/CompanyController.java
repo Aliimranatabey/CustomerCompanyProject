@@ -44,6 +44,11 @@ public class CompanyController {
     public Company getById(@RequestParam("id") UUID id){
         return companyService.getById(id);
     }
+    @PostMapping("/addP")
+    public String saveProduct(@RequestParam("file") MultipartFile file,@RequestParam("name") String name,@RequestParam("url") String url){
+    	companyService.saveCompanyToDB(file, name, url);
+    	return "redirect:/listCompanys.html";
+    }
 
     @PostMapping("")
     public String add(@RequestBody Company company){
