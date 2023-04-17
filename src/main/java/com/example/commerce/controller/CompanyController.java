@@ -1,5 +1,6 @@
 package com.example.commerce.controller;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -7,6 +8,8 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.jpa.domain.JpaSort.Path;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +26,6 @@ import com.example.commerce.service.CompanyService;
 @RestController
 @RequestMapping("company")
 public class CompanyController {
-
     // @Value
     // private String path;
     
@@ -43,11 +45,6 @@ public class CompanyController {
     @GetMapping("/getById")
     public Company getById(@RequestParam("id") UUID id){
         return companyService.getById(id);
-    }
-    @PostMapping("/addP")
-    public String saveProduct(@RequestParam("file") MultipartFile file,@RequestParam("name") String name,@RequestParam("url") String url){
-    	companyService.saveCompanyToDB(file, name, url);
-    	return "redirect:/listCompanys.html";
     }
 
     @PostMapping("")
@@ -74,8 +71,8 @@ public class CompanyController {
         System.out.println(file.getName());
         System.out.println(file.getContentType());
         System.out.println(file.getSize());
-        // String Path_Directory = "D:/FuBahar4/internWorkspace/commerce/src/main/resources/static"; // static olarak yolu belirtebiliriz.
-        String Path_Directory = new ClassPathResource("static/image/").getFile().getAbsolutePath(); // proje içindekideki dosyayı belirttikten sonra bize o dosyanın pcdeki kesin yolunu verir.
+        String Path_Directory = "D:/FuBahar4/internWorkspace/commerce/src/main/resources/static"; // static olarak yolu belirtebiliriz.
+        // String Path_Directory = new ClassPathResource("static/image/").getFile().getAbsolutePath(); // proje içindekideki dosyayı belirttikten sonra bize o dosyanın pcdeki kesin yolunu verir.
         Files.copy(file.getInputStream(), Paths.get(Path_Directory + File.separator + file.getOriginalFilename()) , StandardCopyOption.REPLACE_EXISTING  );
         return "SUCCESSFUL IMAGE";
     }
